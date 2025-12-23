@@ -1,5 +1,6 @@
 import Header from "./Header";
 
+
 function CheckoutPage() {
   return (
     <div className="bg-light min-vh-100">

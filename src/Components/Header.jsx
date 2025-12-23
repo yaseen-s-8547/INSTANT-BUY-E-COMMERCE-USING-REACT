@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 function Header() {
   return (
     <nav
@@ -8,9 +8,12 @@ function Header() {
       <div className="container-fluid">
 
         {/* Store Name */}
-        <span className="navbar-brand fw-bold fs-4 text-warning">
+        <Link
+          to="/"
+          className="navbar-brand fw-bold text-warning text-decoration-none"
+        >
           Instant Buy
-        </span>
+        </Link>
 
         {/* Search Box */}
         <form className="d-flex mx-auto w-50">
@@ -20,7 +23,9 @@ function Header() {
             placeholder="Search products"
           />
         </form>
-
+         <Link to="OrderPage" className="btn btn-warning fw-semibold me-2">
+         order
+         </Link>
         {/* Cart Button */}
         <button className="btn btn-warning fw-semibold">
           Cart 🛒
