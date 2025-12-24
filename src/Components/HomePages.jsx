@@ -5,7 +5,7 @@ import ProductGrid from "./productGrid"
 function HomePage() {
   return (
     <div className="bg-light min-vh-100">
-      <Header />
+      <Header varient="home"/>
       <ProductGrid />
     </div>
   )

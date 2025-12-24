@@ -4,7 +4,7 @@ import Header from "./Header";
 function CheckoutPage() {
   return (
     <div className="bg-light min-vh-100">
-      <Header />
+      <Header varient="checkout" />
 
       <div className="container my-5">
         <div className="row">
