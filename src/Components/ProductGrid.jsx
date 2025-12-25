@@ -1,11 +1,17 @@
 import  axios from 'axios'
-import { products } from "../../data/product"
+
+import { useEffect,useState } from 'react';
 
 function ProductGrid() {
-  axios.get('http://localhost:3000/api/products')
+  const [products,setProducts]=useState([])
+ 
+  useEffect(()=>{
+    axios.get('http://localhost:3000/api/products')
   .then((response)=>{
-   console.log(response.data) 
+   setProducts(response.data);
     })
+  },[]);
+  
   
   return (
     <div className="container my-4">
@@ -16,7 +22,7 @@ function ProductGrid() {
 
       {products.map((products)=>{
         return(
-            <div key={products.id}className="col-12 col-md-6 col-lg-3">
+            <div key={products.id}className="col-6 col-md-6 col-lg-3">
           <div className="card h-100 shadow-sm">
             <img src={products.image} className="card-img-top" />
             <div className="card-body d-flex flex-column">

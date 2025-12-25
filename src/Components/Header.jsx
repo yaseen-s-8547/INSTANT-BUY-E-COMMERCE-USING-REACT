@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-function Header({ varient }) {
+function Header({ varient,cart }) {
+  let totalQuantity=0;
+  cart.forEach((cartitem)=>{
+    totalQuantity+=cartitem.quantity
+  })
+  
   return (
     <>
       <nav
@@ -18,7 +23,7 @@ function Header({ varient }) {
           {varient === "checkout" && (
             <div className="d-flex mx-auto">
               <span className="navbar-brand fw-bold text-warning">
-                Checkout (0 items)
+                Checkout (0)
               </span>
             </div>
 
@@ -44,7 +49,7 @@ function Header({ varient }) {
             </Link>
             {/* Cart Button */}
             <Link to="OrderPage" className="btn btn-warning fw-semibold me-0">
-              Cart 🛒
+              Cart 🛒({totalQuantity})
             </Link>
           </div>
 
