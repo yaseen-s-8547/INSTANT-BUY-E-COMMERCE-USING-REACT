@@ -2,6 +2,12 @@
 import { products } from "../../data/product"
 
 function ProductGrid() {
+  fetch('http://localhost:3000/api/products')
+  .then((response)=>{
+    response.json().then((data)=>{
+      console.log(data) 
+    })
+  })
   return (
     <div className="container my-4">
 
