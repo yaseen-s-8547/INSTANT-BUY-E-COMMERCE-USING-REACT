@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-function Header({ varient,cart }) {
+function Header({ variant,cart=[] }) {
   let totalQuantity=0;
   cart.forEach((cartitem)=>{
     totalQuantity+=cartitem.quantity
@@ -20,38 +20,37 @@ function Header({ varient,cart }) {
           >
             Instant Buy
           </Link>
-          {varient === "checkout" && (
+          {variant === "checkout" && (
             <div className="d-flex mx-auto">
               <span className="navbar-brand fw-bold text-warning">
                 Checkout (0)
               </span>
             </div>
-
-
+           
+          
 
           )}
           {/* Search Box */}
-          {varient === "home" && (
+          {variant === "home" && (
+            <>
             <form className="d-flex mx-auto w-50">
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search products"
-
-              />
-
-
-            </form>
-          )}
-          <div className="d-flex justify-content-end">
-            <Link to="OrderPage" className="btn btn-warning fw-semibold me-2">
+                placeholder="Search products"/>
+             </form>
+             <div className="d-flex justify-content-end">
+            <Link to="orders" className="btn btn-warning fw-semibold me-2">
               order
             </Link>
             {/* Cart Button */}
-            <Link to="OrderPage" className="btn btn-warning fw-semibold me-0">
+            <Link to="checkout" className="btn btn-warning fw-semibold me-0">
               Cart 🛒({totalQuantity})
             </Link>
           </div>
+            </>
+          )}
+          
 
         </div>
       </nav>

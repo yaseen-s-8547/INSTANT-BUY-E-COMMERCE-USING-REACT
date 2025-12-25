@@ -4,7 +4,7 @@ function OrdersPage() {
   return (
     <div className="bg-light min-vh-100">
       {/* Header with search */}
-      <Header variant="home" />
+      <Header variant="checkout" />
 
       <div className="container my-4">
         <h2 className="fw-bold mb-4">Your Orders</h2>
