@@ -26,7 +26,7 @@ function CheckoutPage({ cart }) {
 
           <div className="col-lg-12">
             {/* LEFT SIDE — ORDER DETAILS */}
-            {cart.map((cartItem) => {
+            { deliveryOption.length>0 && cart.map((cartItem) => {
               const selectedDeliveryOption =deliveryOption
               .find((deliveryOption)=>{
                 return deliveryOption.id===cartItem.deliveryOptionId
