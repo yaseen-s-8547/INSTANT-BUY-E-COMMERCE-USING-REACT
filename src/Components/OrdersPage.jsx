@@ -1,7 +1,20 @@
 import Header from "./Header";
+import { formatmoney } from "../utils/money";
+import axios from "axios";
+import dayjs from "dayjs";
+import { Fragment, useEffect, useState } from "react";
+
 
 function OrdersPage() {
+  const [order, setOrder] = useState([]);
+  useEffect(() => {
+    axios.get('/api/orders?expand=products')
+      .then((response) => {
+        setOrder(response.data)
+      })
+  }, [])
   return (
+
     <div className="bg-light min-vh-100">
       {/* Header with search */}
       <Header variant="checkout" />
@@ -11,114 +24,69 @@ function OrdersPage() {
 
         {/* ORDER CARD */}
         <div className="card shadow-sm mb-4">
-          
+
           {/* ORDER HEADER */}
-          <div className="card-body border-bottom">
-            <div className="row text-muted small">
-              <div className="col-md-3">
-                <div className="fw-semibold text-dark">Order Placed</div>
-                December 23
-              </div>
 
-              <div className="col-md-3">
-                <div className="fw-semibold text-dark">Total</div>
-                $181.21
-              </div>
+          { order&&order.map((orders) => {
+            return (
+              <Fragment key={orders.id}>
+                <div  className="card-body border-bottom">
+                  <div className="row text-muted small">
+                    <div className="col-md-3">
+                      <div className="fw-semibold text-dark">Order Placed</div>
+                      {dayjs(orders.orderTimeMs).format('MMMM,D')}
+                    </div>
 
-              <div className="col-md-6 text-md-end">
-                <div className="fw-semibold text-dark">Order ID</div>
-                cf45c640-fa15-7931-7b25-f03d45885809
-              </div>
-            </div>
-          </div>
+                    <div className="col-md-3">
+                      <div className="fw-semibold text-dark">Total</div>
+                      {formatmoney(orders.totalCostCents)}
+                    </div>
 
-          {/* ORDER ITEM 1 */}
-          <div className="card-body border-bottom">
-            <div className="row align-items-center">
-              <div className="col-md-2">
-                <img
-                  src="https://via.placeholder.com/120"
-                  className="img-fluid rounded"
-                />
-              </div>
+                    <div className="col-md-6 text-md-end">
+                      <div className="fw-semibold text-dark">Order ID</div>
+                      {orders.id}
+                    </div>
+                  </div>
+                </div>
 
-              <div className="col-md-6">
-                <h6 className="fw-bold">
-                  Black and Gray Athletic Cotton Socks - 6 Pairs
-                </h6>
-                <p className="mb-1">Arriving on: January 1</p>
-                <p className="mb-2">Quantity: 2</p>
+                <div className="card-body border-bottom">
+                  {orders.products.map((products) => {
+                    return (
+                      <div key={products.productId} className="row align-items-center">
+                        <div className="col-md-2">
+                          <img
+                            src={products.product.image}
+                            className="img-fluid rounded"
+                          />
+                        </div>
 
-                <button className="btn btn-success btn-sm">
-                  Add to Cart
-                </button>
-              </div>
+                        <div className="col-md-6">
+                          <h6 className="fw-bold">
+                            {products.name}
+                          </h6>
+                          <p className="mb-1"> Estimates Delivery: {dayjs(products.estimatedDeliveryTimeMs).format('MMMM,D')}</p>
+                          <p className="mb-2">{products.quantity}</p>
 
-              <div className="col-md-4 text-md-end">
-                <button className="btn btn-outline-secondary">
-                  Track package
-                </button>
-              </div>
-            </div>
-          </div>
+                          <button className="btn btn-success btn-sm">
+                            Add to Cart
+                          </button>
+                        </div>
 
-          {/* ORDER ITEM 2 */}
-          <div className="card-body border-bottom">
-            <div className="row align-items-center">
-              <div className="col-md-2">
-                <img
-                  src="https://via.placeholder.com/120"
-                  className="img-fluid rounded"
-                />
-              </div>
+                        <div className="col-md-4 text-md-end">
+                          <button className="btn btn-outline-secondary">
+                            Track package
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
 
-              <div className="col-md-6">
-                <h6 className="fw-bold">Intermediate Size Basketball</h6>
-                <p className="mb-1">Arriving on: December 26</p>
-                <p className="mb-2">Quantity: 1</p>
+                </div>
+              </Fragment>
+            )
+          })}
 
-                <button className="btn btn-success btn-sm">
-                  Add to Cart
-                </button>
-              </div>
-
-              <div className="col-md-4 text-md-end">
-                <button className="btn btn-outline-secondary">
-                  Track package
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ORDER ITEM 3 */}
-          <div className="card-body">
-            <div className="row align-items-center">
-              <div className="col-md-2">
-                <img
-                  src="https://via.placeholder.com/120"
-                  className="img-fluid rounded"
-                />
-              </div>
-
-              <div className="col-md-6">
-                <h6 className="fw-bold">
-                  Women's Knit Winter Beanie - Blue
-                </h6>
-                <p className="mb-1">Arriving on: January 1</p>
-                <p className="mb-2">Quantity: 6</p>
-
-                <button className="btn btn-success btn-sm">
-                  Add to Cart
-                </button>
-              </div>
-
-              <div className="col-md-4 text-md-end">
-                <button className="btn btn-outline-secondary">
-                  Track package
-                </button>
-              </div>
-            </div>
-          </div>
+         
 
         </div>
       </div>
