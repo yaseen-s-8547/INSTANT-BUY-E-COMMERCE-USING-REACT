@@ -2,22 +2,29 @@ import Header from "./Header";
 import { formatmoney } from "../utils/money";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 
 
 function CheckoutPage({ cart }) {
   const [deliveryOption, setDeliveryOption] = useState([])
-  const[PaymentSummary,setPaymentSummary]=useState([null])
+  const [PaymentSummary, setPaymentSummary] = useState([null])
   useEffect(() => {
-    axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
-      .then((response) => {
-        setDeliveryOption(response.data)
-      });
-      axios.get('/api/payment-summary')
-      .then((response)=>{
+
+    const getCheckoutpage =()=>{
+     const response = axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
+      setDeliveryOption(response.data)
+      
+    
+    axios.get('/api/payment-summary')
+      
         setPaymentSummary(response.data)
-      })
-  },[])
+    
+    }
+      
+    
+  getCheckoutpage();
+    
+  }, [])
 
 
 
@@ -31,11 +38,11 @@ function CheckoutPage({ cart }) {
 
           <div className="col-lg-12">
             {/* LEFT SIDE — ORDER DETAILS */}
-            { deliveryOption.length > 0 && cart.map((cartItem) => {
-              const selectedDeliveryOption =deliveryOption
-              .find((deliveryOption)=>{
-                return deliveryOption.id===cartItem.deliveryOptionId
-              })
+            {deliveryOption.length > 0 && cart.map((cartItem) => {
+              const selectedDeliveryOption = deliveryOption
+                .find((deliveryOption) => {
+                  return deliveryOption.id === cartItem.deliveryOptionId
+                })
               return (
                 <div key={cartItem.productId} className="col-lg-12">
 
@@ -70,22 +77,21 @@ function CheckoutPage({ cart }) {
                             <span className="text-success ms-2">Delete</span>
                           </p>
                         </div>
-                       <div className="col-md-4">
-                        <h6 className="fw-bold mb-2">
-                          Choose Your Delivery
-                        </h6>
-                         {deliveryOption.map((delivery) => {
-                          let priceString='Free Shipping'
-                          if(delivery.priceCents>0){
-                            priceString =`${formatmoney(delivery.priceCents)} -Shipping`
-                          }
-                          return (
-                            <>
-                              
+                        <div className="col-md-4">
+                          <h6 className="fw-bold mb-2">
+                            Choose Your Delivery
+                          </h6>
+                          {deliveryOption.map((delivery) => {
+                            let priceString = 'Free Shipping'
+                            if (delivery.priceCents > 0) {
+                              priceString = `${formatmoney(delivery.priceCents)} -Shipping`
+                            }
+                            return (
+                              <>
 
                                 <div className="form-check mb-2">
                                   <input
-                                    checked={delivery.id===cartItem.deliveryOptionId}
+                                    checked={delivery.id === cartItem.deliveryOptionId}
                                     className="form-check-input"
                                     type="radio"
                                     name={`delivery-option-${cartItem.productId}`}
@@ -96,13 +102,13 @@ function CheckoutPage({ cart }) {
                                   </label>
                                 </div>
 
-                               
 
-                              
-                            </>
-                          )
-                        })}
-                       </div>
+
+
+                              </>
+                            )
+                          })}
+                        </div>
 
 
                       </div>

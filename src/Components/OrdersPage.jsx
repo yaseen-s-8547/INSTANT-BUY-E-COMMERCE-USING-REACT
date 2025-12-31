@@ -8,10 +8,12 @@ import { Fragment, useEffect, useState } from "react";
 function OrdersPage() {
   const [order, setOrder] = useState([]);
   useEffect(() => {
-    axios.get('/api/orders?expand=products')
-      .then((response) => {
-        setOrder(response.data)
-      })
+    const   getOrder = async  () => {
+      const response =  await axios.get('/api/orders?expand=products')
+      setOrder(response.data)
+     }
+     getOrder();
+
   }, [])
   return (
 
@@ -27,10 +29,10 @@ function OrdersPage() {
 
           {/* ORDER HEADER */}
 
-          { order&&order.map((orders) => {
+          {order && order.map((orders) => {
             return (
               <Fragment key={orders.id}>
-                <div  className="card-body border-bottom">
+                <div className="card-body border-bottom">
                   <div className="row text-muted small">
                     <div className="col-md-3">
                       <div className="fw-semibold text-dark">Order Placed</div>
@@ -86,7 +88,7 @@ function OrdersPage() {
             )
           })}
 
-         
+
 
         </div>
       </div>

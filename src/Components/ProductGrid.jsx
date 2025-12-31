@@ -6,10 +6,14 @@ function ProductGrid() {
   const [products,setProducts]=useState([])
  
   useEffect(()=>{
-    axios.get('/api/products')
-  .then((response)=>{
-   setProducts(response.data);
-    })
+
+    const  getHome = async ()=>{
+    const response = await axios.get('/api/products');
+    setProducts(response.data)
+    }
+
+    getHome();
+   
   },[]);
   
   
@@ -39,5 +43,6 @@ function ProductGrid() {
     </div>
   )
 }
+
 
 export default ProductGrid
