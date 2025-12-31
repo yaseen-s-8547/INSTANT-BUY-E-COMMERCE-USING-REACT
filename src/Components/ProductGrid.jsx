@@ -1,5 +1,5 @@
 import  axios from 'axios'
-
+import { formatmoney } from '../utils/money';
 import { useEffect,useState } from 'react';
 
 function ProductGrid() {
@@ -27,7 +27,7 @@ function ProductGrid() {
             <img src={products.image} className="card-img-top" />
             <div className="card-body d-flex flex-column">
               <h6 className="fw-bold">{products.name}</h6>
-              <p className="text-success">${products.priceCents/100}</p>
+              <p className="text-success">{formatmoney(products.priceCents)}</p>
               <button className="btn btn-success mt-auto">Add to Cart</button>
             </div>
           </div>
