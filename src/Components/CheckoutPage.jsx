@@ -7,11 +7,16 @@ import dayjs from 'dayjs'
 
 function CheckoutPage({ cart }) {
   const [deliveryOption, setDeliveryOption] = useState([])
+  const[PaymentSummary,setPaymentSummary]=useState([null])
   useEffect(() => {
     axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
       .then((response) => {
         setDeliveryOption(response.data)
       });
+      axios.get('/api/payment-summary')
+      .then((response)=>{
+        setPaymentSummary(response.data)
+      })
   },[])
 
 
@@ -26,7 +31,7 @@ function CheckoutPage({ cart }) {
 
           <div className="col-lg-12">
             {/* LEFT SIDE — ORDER DETAILS */}
-            { deliveryOption.length>0 && cart.map((cartItem) => {
+            { deliveryOption.length > 0 && cart.map((cartItem) => {
               const selectedDeliveryOption =deliveryOption
               .find((deliveryOption)=>{
                 return deliveryOption.id===cartItem.deliveryOptionId
@@ -121,30 +126,30 @@ function CheckoutPage({ cart }) {
                     <h5 className="fw-bold mb-3">Payment Summary</h5>
 
                     <div className="d-flex justify-content-between mb-2">
-                      <span>Items (8):</span>
-                      <span>$87.20</span>
+                      <span>Items ({PaymentSummary.totalItems}):</span>
+                      <span>{formatmoney(PaymentSummary.productCostCents)}</span>
                     </div>
 
                     <div className="d-flex justify-content-between mb-2">
                       <span>Shipping & handling:</span>
-                      <span>$9.99</span>
+                      <span>${PaymentSummary.shippingCostCents}</span>
                     </div>
 
                     <div className="d-flex justify-content-between mb-2">
                       <span>Total before tax:</span>
-                      <span>$97.19</span>
+                      <span>{formatmoney(PaymentSummary.totalCostBeforeTaxCents)}</span>
                     </div>
 
                     <div className="d-flex justify-content-between mb-3">
                       <span>Estimated tax (10%):</span>
-                      <span>$9.72</span>
+                      <span>{formatmoney(PaymentSummary.taxCents)}</span>
                     </div>
 
                     <hr />
 
                     <div className="d-flex justify-content-between fw-bold fs-5 text-success mb-3">
                       <span>Order total:</span>
-                      <span>$106.91</span>
+                      <span>{PaymentSummary.totalCostCents}</span>
                     </div>
 
                     <button className="btn btn-success w-100 py-2">
