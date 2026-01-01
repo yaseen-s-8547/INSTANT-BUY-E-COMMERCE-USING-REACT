@@ -10,8 +10,8 @@ function CheckoutPage({ cart }) {
   const [PaymentSummary, setPaymentSummary] = useState([null])
   useEffect(() => {
 
-    const getCheckoutpage =()=>{
-     const response = axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
+    const getCheckoutpage = async ()=>{
+     const response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
       setDeliveryOption(response.data)
       
     

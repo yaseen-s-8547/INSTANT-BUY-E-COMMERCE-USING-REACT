@@ -3,6 +3,7 @@ import { formatmoney } from "../utils/money";
 import axios from "axios";
 import dayjs from "dayjs";
 import { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router";
 
 
 function OrdersPage() {
@@ -74,10 +75,10 @@ function OrdersPage() {
                           </button>
                         </div>
 
-                        <div className="col-md-4 text-md-end">
-                          <button className="btn btn-outline-secondary">
+                        <div className="col-md-4 text-md-end mt-3">
+                          <Link to='/trackpack'className="btn btn-outline-secondary">
                             Track package
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     )
