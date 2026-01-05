@@ -3,17 +3,36 @@ import { formatmoney } from '../utils/money'
 import { useEffect, useState } from 'react'
 import QuantitySelector from './QuantitySelector'
 
-function ProductGrid({loadCart}) {
+function ProductGrid({ loadCart }) {
   const [products, setProducts] = useState([])
+  const [quantities, setQuantities] = useState({})
 
   useEffect(() => {
     const getHome = async () => {
       const response = await axios.get('/api/products')
       setProducts(response.data)
+      const initialQantities = {}
+      response.data.forEach(product => {
+        initialQantities[product.id] = 1
+      })
+      setQuantities(initialQantities)
     }
-
     getHome()
+
   }, [])
+  function increaseQuantity(productId) {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: (prev[productId]) + 1
+    }))
+  }
+  function decreaseQuantity(productId) {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: Math.max(1, prev[productId] ?? 1) - 1
+    }))
+  }
+
 
   return (
     <div className="container my-4">
@@ -35,12 +54,16 @@ function ProductGrid({loadCart}) {
                 </p>
 
                 {/* Quantity UI only */}
-                <QuantitySelector />
+                <QuantitySelector
+                  quantity={quantities[product.id]}
+                  onIncrease={() => increaseQuantity(product.id)}
+                  onDecrease={() => decreaseQuantity(product.id)}
+                />
 
-                <button className="btn btn-success mt-auto" onClick={async()=>{
-                 await axios.post('/api/cart-items',{
-                    productId:product.id,
-                    quantity:1
+                <button className="btn btn-success mt-auto" onClick={async () => {
+                  await axios.post('/api/cart-items', {
+                    productId: product.id,
+                    quantity: quantities[product.id]
                   });
                   await loadCart();
                 }}>

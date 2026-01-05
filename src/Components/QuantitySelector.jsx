@@ -1,19 +1,13 @@
-function QuantitySelector({ quantity, onChange }) {
-  function increase() {
-    onChange(quantity + 1)
-  }
+function QuantitySelector({ quantity, onIncrease,onDecrease }) {
+ 
 
-  function decrease() {
-    if (quantity > 1) {
-      onChange(quantity - 1)
-    }
-  }
+  
 
   return (
     <div className="d-flex align-items-center gap-2 mb-2">
       <button
         className="btn btn-outline-secondary btn-sm"
-        onClick={decrease}
+        onClick={onDecrease}
       >
         −
       </button>
@@ -22,7 +16,7 @@ function QuantitySelector({ quantity, onChange }) {
 
       <button
         className="btn btn-outline-secondary btn-sm"
-        onClick={increase}
+        onClick={onIncrease}
       >
         +
       </button>
