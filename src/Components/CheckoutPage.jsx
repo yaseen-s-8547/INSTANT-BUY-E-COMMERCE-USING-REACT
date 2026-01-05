@@ -15,9 +15,9 @@ function CheckoutPage({ cart }) {
       setDeliveryOption(response.data)
       
     
-    axios.get('/api/payment-summary')
+  const paymentresponse = await axios.get('/api/payment-summary')
       
-        setPaymentSummary(response.data)
+        setPaymentSummary(paymentresponse.data)
     
     }
       

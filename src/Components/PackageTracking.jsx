@@ -1,8 +1,32 @@
 import Header from "./Header";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect,useState } from "react";
+import dayjs from "dayjs";
+import { AnimatedTrackingProgress } from "./AnimatedTrackingProgress";
 
 
 function PackageTracking(){
-
+   const {orderId,productId}=useParams();
+   const [order,setOrder]=useState((null));
+   
+  useEffect(()=>{
+    if(!orderId)return;
+    console.log("api call started")
+    const getPackage =  async()=>{
+    const response = await axios.get(`/api/orders/${orderId}?expand=products`)
+    console.log(response.data,"api complete")
+    setOrder(response.data)
+    }
+    getPackage();
+  },[orderId])
+  if(!order){
+    return null
+  }
+  const orderProduct=order.products.find((proid)=>{
+   return proid.productId===productId
+  });
+  
 
     return(
           <div className="bg-white min-vh-100">
@@ -14,26 +38,26 @@ function PackageTracking(){
         <a href="#" className="text-success text-decoration-underline">
           View all orders
         </a>
-
+        {}
         {/* ORDER INFO */}
         <div className="mt-3">
           <h4 className="fw-bold">
-            Arriving on Monday, January 5
+          Arriving {dayjs(orderProduct.estimatedDeliveryTimeMs).format('MMMM,D')}
           </h4>
 
-          <p className="mb-1">
-            Black and Gray Athletic Cotton Socks - 6 Pairs
+          <p className="mb-1 fw-bold">
+            {orderProduct.product.name}
           </p>
           <p className="text-muted">
-            Quantity: 1
+            Quantity: {orderProduct.quantity}
           </p>
         </div>
 
         {/* PRODUCT IMAGE */}
         <div className="my-4">
           <img
-            src="/images/socks.png"   // replace with your real path
-            alt="product"
+            src={`/${orderProduct.product.image}`}   // replace with your real path
+           
             style={{ width: "120px" }}
           />
         </div>
@@ -41,20 +65,10 @@ function PackageTracking(){
         {/* ORDER STATUS */}
         <div className="mt-5">
 
-          {/* STATUS LABELS */}
-          <div className="d-flex justify-content-between fw-semibold mb-2">
-            <span className="text-success">Preparing</span>
-            <span className="text-muted">Shipped</span>
-            <span className="text-muted">Delivered</span>
-          </div>
-
-          {/* PROGRESS BAR */}
-          <div className="progress" style={{ height: "14px", borderRadius: "20px" }}>
-            <div
-              className="progress-bar bg-success"
-              style={{ width: "20%", borderRadius: "20px" }}
-            ></div>
-          </div>
+          <AnimatedTrackingProgress 
+          startTime={order.orderTimeMs}
+          endTime={orderProduct.estimateDeliveryTimeMs}
+          />
 
         </div>
       </div>

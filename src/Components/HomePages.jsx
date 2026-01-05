@@ -3,13 +3,13 @@ import ProductGrid from "./productGrid"
 
 
 
-function HomePage({cart}) {
+function HomePage({cart,loadCart}) {
    
  
   return (
     <div className="bg-light min-vh-100">
     <Header variant="home" cart={cart}/>
-      <ProductGrid />
+      <ProductGrid loadCart={loadCart} />
     </div>
   )
 }

@@ -9,11 +9,12 @@ import axios from 'axios'
 import PackageTracking from "./Components/PackageTracking"
 function App() {
   const [cart,setCart]=useState([])
+   const loadCart = async () => {
+      const response = await axios.get('/api/cart-items?expand=product');
+    setCart(response.data);
+    };
    useEffect(()=>{
-     axios.get('/api/cart-items?expand=product')
-  .then((response)=>{
-   setCart(response.data);
-    })
+   loadCart();
   },[])
 
   return (
@@ -21,10 +22,10 @@ function App() {
     
     
     <Routes>
-      <Route path='/' element={<HomePages  cart={cart}/>} />
+      <Route path='/' element={<HomePages  cart={cart} loadCart={loadCart}/>} />
       <Route path='/checkout' element={<CheckoutPage cart={cart}/>} /> 
       <Route path='/orders' element={<OrdersPage  cart={cart} />} />
-      <Route path='/trackpack' element={<PackageTracking />}/>
+      <Route path='/trackpack/:orderId/:productId' element={<PackageTracking />}/>
     </Routes>
   </>
   )
