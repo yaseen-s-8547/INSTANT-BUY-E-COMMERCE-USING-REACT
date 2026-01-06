@@ -31,6 +31,10 @@ function CheckoutPage({ cart,loadCart }) {
       });
       await loadCart();
    }
+   const deleteFunction =async(cartItemId)=>{
+    await axios.delete(`/api/cart-items/${cartItemId}`)
+    await loadCart();
+   }
 
 
   return (
@@ -78,8 +82,8 @@ function CheckoutPage({ cart,loadCart }) {
 
                           <p className="mb-1">
                             Quantity: {cartItem.quantity}
-                            <span className="text-success ms-2">Update</span>{" "}
-                            <span className="text-success ms-2">Delete</span>
+                            <span className="text-success ms-2" onClick={()=>{}}>Update</span>{" "}
+                            <span className="text-success ms-2" type="button"  onClick={()=>deleteFunction(cartItem.productId)}>Delete</span>
                           </p>
                         </div>
                         <div className="col-md-4">
