@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import dayjs from 'dayjs';
 
 
-function CheckoutPage({ cart }) {
+function CheckoutPage({ cart,loadCart }) {
   const [deliveryOption, setDeliveryOption] = useState([])
   const [PaymentSummary, setPaymentSummary] = useState([null])
   useEffect(() => {
@@ -24,8 +24,13 @@ function CheckoutPage({ cart }) {
     
   getCheckoutpage();
     
-  }, [])
-
+  }, [cart])
+   const updateDeliveryOption =async (cartItemId,deliveryOptionId) =>{
+    await   axios.put(`/api/cart-items/${cartItemId}`,{
+        deliveryOptionId
+      });
+      await loadCart();
+   }
 
 
   return (
@@ -89,12 +94,13 @@ function CheckoutPage({ cart }) {
                             return (
                               <>
 
-                                <div className="form-check mb-2">
+                                <div className="form-check mb-2  " onChange={()=>updateDeliveryOption(cartItem.productId,delivery.id)}>
                                   <input
                                     checked={delivery.id === cartItem.deliveryOptionId}
                                     className="form-check-input"
                                     type="radio"
                                     name={`delivery-option-${cartItem.productId}`}
+                                    onChange={()=>{}}
                                   />
                                   <label className="form-check-label">
                                     {dayjs(delivery.estimatedDeliveryTimeMs).format('dddd, MMMM D')} <br />
