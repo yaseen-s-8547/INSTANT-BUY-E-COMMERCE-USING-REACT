@@ -9,11 +9,11 @@ import React from "react";
 function OrdersPage() {
   const [order, setOrder] = useState([]);
   useEffect(() => {
-    const   getOrder = async  () => {
-      const response =  await axios.get('/api/orders?expand=products')
+    const getOrder = async () => {
+      const response = await axios.get('/api/orders?expand=products')
       setOrder(response.data)
-     }
-     getOrder();
+    }
+    getOrder();
 
   }, [])
   return (
@@ -76,9 +76,9 @@ function OrdersPage() {
                         </div>
 
                         <div className="col-md-4 text-md-end mt-3">
-                          <Link to={`/trackpack/${orders.id}/${products.productId}`}className="btn btn-outline-secondary">
+                          <Link to={`/trackpack/${orders.id}/${products.productId}`} className="btn btn-outline-secondary">
                             Track package
-                          </Link> 
+                          </Link>
                         </div>
                       </div>
                     )
@@ -98,3 +98,6 @@ function OrdersPage() {
 }
 
 export default OrdersPage;
+
+
+
