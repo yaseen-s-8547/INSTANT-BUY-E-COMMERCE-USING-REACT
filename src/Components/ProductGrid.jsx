@@ -45,7 +45,7 @@ function ProductGrid({ loadCart }) {
           <div key={product.id} className="col-6 col-md-6 col-lg-3">
             <div className="card h-100 shadow-sm">
               <img
-                src={product.image}
+                src={`https://instant-buy-backend.onrender.com/image/${product.image}`}
                 className="card-img-top"
                 alt={product.name}
               />
@@ -65,7 +65,7 @@ function ProductGrid({ loadCart }) {
                 />
 
                 <button className="btn btn-success mt-auto" onClick={async () => {
-                  await axios.post('https://instant-buy-backend.onrender.com/image/api/cart-items', {
+                  await axios.post('https://instant-buy-backend.onrender.com/api/cart-items', {
                     productId: product.id,
                     quantity: quantities[product.id]
                   });
