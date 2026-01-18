@@ -14,7 +14,7 @@ function PackageTracking(){
     if(!orderId)return;
     console.log("api call started")
     const getPackage =  async()=>{
-    const response = await axios.get(`/api/orders/${orderId}?expand=products`)
+    const response = await axios.get(`https://instant-buy-backend.onrender.com/api/orders/${orderId}?expand=products`)
     console.log(response.data,"api complete")
     setOrder(response.data)
     }

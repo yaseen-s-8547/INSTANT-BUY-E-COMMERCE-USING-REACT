@@ -12,7 +12,7 @@ function CheckoutPage({ cart, loadCart }) {
   useEffect(() => {
 
     const getCheckoutpage = async () => {
-      const response = await axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
+      const response = await axios.get('https://instant-buy-backend.onrender.com/api/delivery-options?expand=estimatedDeliveryTime')
       setDeliveryOption(response.data)
 
 

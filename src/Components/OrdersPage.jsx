@@ -10,7 +10,7 @@ function OrdersPage() {
   const [order, setOrder] = useState([]);
   useEffect(() => {
     const getOrder = async () => {
-      const response = await axios.get('/api/orders?expand=products')
+      const response = await axios.get('https://instant-buy-backend.onrender.com/api/orders?expand=products')
       setOrder(response.data)
     }
     getOrder();
