@@ -16,7 +16,7 @@ function CheckoutPage({ cart, loadCart }) {
       setDeliveryOption(response.data)
 
 
-      const paymentresponse = await axios.get('/api/payment-summary')
+      const paymentresponse = await axios.get('https://instant-buy-backend.onrender.com/image/api/payment-summary')
 
       setPaymentSummary(paymentresponse.data)
 
@@ -27,17 +27,17 @@ function CheckoutPage({ cart, loadCart }) {
 
   }, [cart])
   const updateDeliveryOption = async (cartItemId, deliveryOptionId) => {
-    await axios.put(`/api/cart-items/${cartItemId}`, {
+    await axios.put(`https://instant-buy-backend.onrender.com/image/api/cart-items/${cartItemId}`, {
       deliveryOptionId
     });
     await loadCart();
   }
   const deleteFunction = async (cartItemId) => {
-    await axios.delete(`/api/cart-items/${cartItemId}`)
+    await axios.delete(`https://instant-buy-backend.onrender.com/image/api/cart-items/${cartItemId}`)
     await loadCart();
   }
   const updateFunction = async (cartItemId,quantity) => {
-    await axios.put(`/api/cart-items/${cartItemId}`,{quantity})
+    await axios.put(`https://instant-buy-backend.onrender.com/image/api/cart-items/${cartItemId}`,{quantity})
     
     await loadCart();
     setEditingItemId(null)

@@ -65,7 +65,7 @@ function ProductGrid({ loadCart }) {
                 />
 
                 <button className="btn btn-success mt-auto" onClick={async () => {
-                  await axios.post('/api/cart-items', {
+                  await axios.post('https://instant-buy-backend.onrender.com/image/api/cart-items', {
                     productId: product.id,
                     quantity: quantities[product.id]
                   });
