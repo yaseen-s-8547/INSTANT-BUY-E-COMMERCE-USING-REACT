@@ -13,7 +13,7 @@ function ProductGrid({ loadCart }) {
 
   useEffect(() => {
     const getHome = async () => {
-      const response = await axios.get('https://instant-buy-backend.onrender.com/api/images/products')
+      const response = await axios.get('https://instant-buy-backend.onrender.com/api/products')
       setProducts(response.data)
       const initialQantities = {}
       response.data.forEach(product => {
