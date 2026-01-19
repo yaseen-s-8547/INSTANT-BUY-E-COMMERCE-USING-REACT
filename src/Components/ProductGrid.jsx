@@ -71,7 +71,7 @@ function ProductGrid({ loadCart }) {
                   });
                   await loadCart();
                 }}>
-                  Add to Cart
+                  Add to Cartss
                 </button>
               </div>
             </div>
