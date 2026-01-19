@@ -16,8 +16,9 @@ function CheckoutPage({ cart, loadCart }) {
       setDeliveryOption(response.data)
 
 
-      const paymentresponse = await axios.get('https://instant-buy-backend.onrender.com/image/api/payment-summary')
-
+ const paymentresponse = await axios.get(
+        "https://instant-buy-backend.onrender.com/api/payment-summary"
+      );
       setPaymentSummary(paymentresponse.data)
 
     }
@@ -36,8 +37,11 @@ function CheckoutPage({ cart, loadCart }) {
     await axios.delete(`https://instant-buy-backend.onrender.com/image/api/cart-items/${cartItemId}`)
     await loadCart();
   }
-  const updateFunction = async (cartItemId,quantity) => {
-    await axios.put(`https://instant-buy-backend.onrender.com/image/api/cart-items/${cartItemId}`,{quantity})
+   const updateFunction = async (cartItemId, quantity) => {
+    await axios.put(
+      `https://instant-buy-backend.onrender.com/api/cart-items/${cartItemId}`,
+      { quantity }
+    );
     
     await loadCart();
     setEditingItemId(null)
@@ -77,7 +81,7 @@ function CheckoutPage({ cart, loadCart }) {
                           {/* PRODUCT IMAGE */}
                           <div className="col-md-3">
                             <img
-                              src={cartItem.product.image}
+                               src={`https://instant-buy-backend.onrender.com/${cartItem.product.image}`}
                               className="img-fluid w-75 h-75"
                               alt="product"
                             />
