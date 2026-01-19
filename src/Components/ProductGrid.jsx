@@ -13,7 +13,7 @@ function ProductGrid({ loadCart }) {
 
   useEffect(() => {
     const getHome = async () => {
-      const response = await axios.get('https://instant-buy-backend.onrender.com/api/products')
+      const response = await axios.get('https://instant-buy-backend.onrender.com/api/images/products')
       setProducts(response.data)
       const initialQantities = {}
       response.data.forEach(product => {
@@ -45,7 +45,7 @@ function ProductGrid({ loadCart }) {
           <div key={product.id} className="col-6 col-md-6 col-lg-3">
             <div className="card h-100 shadow-sm">
               <img
-                src={`https://instant-buy-backend.onrender.com/image/products/${product.image}`}
+                src={`https://instant-buy-backend.onrender.com/images/products/${product.image}`}
                 className="card-img-top"
                 alt={product.name}
               />
