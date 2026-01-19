@@ -45,7 +45,7 @@ function ProductGrid({ loadCart }) {
           <div key={product.id} className="col-6 col-md-6 col-lg-3">
             <div className="card h-100 shadow-sm">
               <img
-                src={`https://instant-buy-backend.onrender.com/images/products/${product.image}`}
+                src={`https://instant-buy-backend.onrender.com/${product.image}`}
                 className="card-img-top"
                 alt={product.name}
               />

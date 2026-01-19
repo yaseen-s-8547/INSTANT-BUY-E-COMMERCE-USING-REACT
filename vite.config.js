@@ -11,7 +11,7 @@ export default defineConfig({
         changeOrigin: true,
         secure:true
       },
-      '/images': {
+      '/image': {
         target: 'https://instant-buy-backend.onrender.com',
         changeOrigin: true,
         secure:true
