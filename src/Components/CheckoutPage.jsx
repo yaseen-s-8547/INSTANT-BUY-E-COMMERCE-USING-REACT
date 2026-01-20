@@ -1,25 +1,30 @@
 import Header from "./Header";
 import { formatmoney } from "../utils/money";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import React from "react";
 
+// ✅ use API helper
+import { api } from "../utils/api"; // <-- MAKE SURE path is correct
+
 function CheckoutPage({ cart, loadCart }) {
 
   const [deliveryOption, setDeliveryOption] = useState([]);
-  const [PaymentSummary, setPaymentSummary] = useState({}); // ✅ FIX
+  const [PaymentSummary, setPaymentSummary] = useState({});
 
   useEffect(() => {
+
     const getCheckoutpage = async () => {
 
-      const response = await axios.get(
-        "https://instant-buy-backend.onrender.com/api/delivery-options?expand=estimatedDeliveryTime"
+      // ✅ FIX: use api helper
+      const response = await api.get(
+        "/api/delivery-options?expand=estimatedDeliveryTime"
       );
       setDeliveryOption(response.data);
 
-      const paymentresponse = await axios.get(
-        "https://instant-buy-backend.onrender.com/api/payment-summary"
+      // ✅ FIX: use api helper
+      const paymentresponse = await api.get(
+        "/api/payment-summary"
       );
       setPaymentSummary(paymentresponse.data);
     };
@@ -27,26 +32,27 @@ function CheckoutPage({ cart, loadCart }) {
     getCheckoutpage();
   }, [cart]);
 
-  // ✅ FIX removed /image
+  // ✅ FIX: use api helper
   const updateDeliveryOption = async (cartItemId, deliveryOptionId) => {
-    await axios.put(
-      `https://instant-buy-backend.onrender.com/api/cart-items/${cartItemId}`,
+    await api.put(
+      `/api/cart-items/${cartItemId}`,
       { deliveryOptionId }
     );
     await loadCart();
   };
 
-  // ✅ FIX removed /image
+  // ✅ FIX: use api helper
   const deleteFunction = async (cartItemId) => {
-    await axios.delete(
-      `https://instant-buy-backend.onrender.com/api/cart-items/${cartItemId}`
+    await api.delete(
+      `/api/cart-items/${cartItemId}`
     );
     await loadCart();
   };
 
+  // ✅ FIX: use api helper
   const updateFunction = async (cartItemId, quantity) => {
-    await axios.put(
-      `https://instant-buy-backend.onrender.com/api/cart-items/${cartItemId}`,
+    await api.put(
+      `/api/cart-items/${cartItemId}`,
       { quantity }
     );
     await loadCart();
